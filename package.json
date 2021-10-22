@@ -1,0 +1,26 @@
+{
+  "name": "vite-plugin-https-certs",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format cjs,esm",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vite-plugin"
+  ],
+  "author": "Sacha 'PraZ' Bouillez",
+  "license": "MIT",
+  "devDependencies": {
+    "@prazdevs/eslint-config-typescript": "^2.2.0",
+    "@types/node": "^16.11.3",
+    "eslint": "^7.32.0",
+    "tsup": "^5.4.2",
+    "typescript": "^4.4.4",
+    "vite": "^2.6.10"
+  },
+  "volta": {
+    "node": "16.12.0"
+  }
+}
