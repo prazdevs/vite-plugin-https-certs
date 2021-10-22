@@ -1,4 +1,4 @@
-import { readdirSync } from 'fs'
+import { readdirSync, existsSync } from 'fs'
 import { join, extname } from 'path'
 
 import type { Plugin, UserConfig } from 'vite'
@@ -22,7 +22,8 @@ function httpsCerts (options?: PluginOptions): Plugin {
     name: 'dev-https-certs',
 
     config: (): UserConfig => {
-      const files = readdirSync(join(process.cwd(), path))
+      const certs = join(process.cwd(), path)
+      const files = existsSync(certs) ? readdirSync(certs) : []
 
       const keyFile = files.find(f => keyExts.includes(extname(f)))
       const certFile = files.find(f => certExts.includes(extname(f)))
