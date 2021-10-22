@@ -24,8 +24,8 @@ export default function httpsCerts (options: PluginOptions): Plugin {
     config: (): UserConfig => {
       const files = readdirSync(join(process.cwd(), path))
 
-      const keyFile = files.find(f => certExts.includes(extname(f)))
-      const certFile = files.find(f => keyExts.includes(extname(f)))
+      const keyFile = files.find(f => keyExts.includes(extname(f)))
+      const certFile = files.find(f => certExts.includes(extname(f)))
 
       if (keyFile && certFile) {
         const key = join(path, keyFile)
