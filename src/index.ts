@@ -1,7 +1,7 @@
 import { readdirSync } from 'fs'
 import { join, extname } from 'path'
 
-import type { Plugin, UserConfig } from 'vite'
+import type { Plugin, UserConfig, ResolvedConfig } from 'vite'
 
 export interface PluginOptions {
   path?: string
@@ -18,7 +18,7 @@ export default function httpsCerts (options: PluginOptions): Plugin {
     defaultIfNoCerts = true,
   } = options
 
-  const plugin: Plugin = {
+  const plugin = {
     name: 'dev-https-certs',
 
     config: (): UserConfig => {
@@ -40,7 +40,7 @@ export default function httpsCerts (options: PluginOptions): Plugin {
       return { server: { https: defaultIfNoCerts } }
     },
 
-    configResolved: config => {
+    configResolved: (config: ResolvedConfig) => {
       console.log(config)
     },
   }
