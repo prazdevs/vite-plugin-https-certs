@@ -12,6 +12,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.19.0
       - name: Install dependencies
         run: pnpm Install
       - name: Test and cover
