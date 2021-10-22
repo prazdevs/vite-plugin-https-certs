@@ -10,13 +10,14 @@ export interface PluginOptions {
   defaultIfNoCerts?: boolean
 }
 
-export default function httpsCerts (options: PluginOptions): Plugin {
+function httpsCerts (options: string): Plugin
+function httpsCerts (options: PluginOptions | string): Plugin {
   const {
     path = '.',
     certExts = ['.crt', '.cert'],
     keyExts = ['.key'],
     defaultIfNoCerts = true,
-  } = options
+  } = (typeof options == 'string') ? {} : options
 
   const plugin = {
     name: 'dev-https-certs',
@@ -39,3 +40,5 @@ export default function httpsCerts (options: PluginOptions): Plugin {
   }
   return plugin as Plugin
 }
+
+export default httpsCerts
