@@ -1,4 +1,4 @@
-import { readFileSync, readdirSync } from 'fs'
+import { readdirSync } from 'fs'
 import { join, extname } from 'path'
 
 import type { Plugin, UserConfig } from 'vite'
@@ -22,16 +22,13 @@ export default function httpsCerts (options: PluginOptions): Plugin {
     name: 'dev-https-certs',
 
     config: (): UserConfig => {
-      const files = readdirSync(join(__dirname, path))
+      const files = readdirSync(join(process.cwd(), path))
 
-      const keyFile = files.find(f => certExts.includes(extname(f)))
-      const certFile = files.find(f => keyExts.includes(extname(f)))
+      const key = files.find(f => certExts.includes(extname(f)))
+      const cert = files.find(f => keyExts.includes(extname(f)))
 
-      const https = keyFile && certFile
-        ? {
-          cert: readFileSync(join(__dirname, path, keyFile)),
-          key: readFileSync(join(__dirname, path, certFile)),
-        }
+      const https = key && cert
+        ? { cert, key }
         : defaultIfNoCerts
 
       return {
