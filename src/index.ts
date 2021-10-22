@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync } from 'fs'
+import { readdirSync } from 'fs'
 import { join, extname } from 'path'
 
 import type { Plugin, UserConfig } from 'vite'
@@ -33,9 +33,9 @@ export default function httpsCerts (options: PluginOptions): Plugin {
 
       if (keyFile && certFile) {
         // eslint-disable-next-line max-len
-        console.log(`Will load '${join(root, path, keyFile)}' and '${join(root, path, keyFile)}'`)
-        const key = readFileSync(join(root, path, keyFile))
-        const cert = readFileSync(join(root, path, certFile))
+        console.log(`Will load '${join(root, path, keyFile)}' and '${join(root, path, certFile)}'`)
+        const key = join(root, path, keyFile)
+        const cert = join(root, path, certFile)
 
         return { server: { https: { key, cert } } }
       }
