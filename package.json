@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-https-certs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Parse and load server.https certificates from config in Vite.",
   "keywords": [
     "vite-plugin"
