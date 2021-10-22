@@ -18,17 +18,23 @@
     "build": "tsup src/index.ts --dts --format cjs,esm",
     "prepublishOnly": "npm run build",
     "release": "git-ensure -a && bumpp -c ':bookmark: release v%s' -t -p",
-    "lint": "eslint --fix --ext .ts"
+    "lint": "eslint --fix --ext .ts",
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
   "peerDependencies": {
     "vite": "^2.0.0"
   },
   "devDependencies": {
     "@prazdevs/eslint-config-typescript": "^2.2.0",
+    "@types/jest": "^27.0.2",
     "@types/node": "^16.11.3",
     "bumpp": "^7.1.1",
     "eslint": "^7.32.0",
     "git-ensure": "^0.1.0",
+    "jest": "^27.3.1",
+    "ts-jest": "^27.0.7",
+    "ts-node": "^10.4.0",
     "tsup": "^5.4.2",
     "typescript": "^4.4.4",
     "vite": "^2.6.10"
