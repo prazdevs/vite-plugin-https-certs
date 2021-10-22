@@ -1,4 +1,3 @@
 {
-  "extends": "@prazdevs/eslint-config-typescript",
-  "ignorePatterns": ["dist", "node_modules"]
+  "extends": "@prazdevs/eslint-config-typescript"
 }
