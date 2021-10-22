@@ -17,7 +17,7 @@ function httpsCerts (options: PluginOptions | string): Plugin {
     certExts = ['.crt', '.cert'],
     keyExts = ['.key'],
     defaultIfNoCerts = true,
-  } = (typeof options == 'string') ? {} : options
+  } = (typeof options == 'string') ? { path: options } : options
 
   const plugin = {
     name: 'dev-https-certs',
