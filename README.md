@@ -9,10 +9,11 @@
 <p align="center">Vite plugin to parse and load server.https certificates from a folder provided in config.</p>
 
 <p align="center">
-  <img src="https://img.shields.io/github/package-json/v/prazdevs/vite-plugin-https-certs?style=flat" />
-  <img src="https://img.shields.io/codeclimate/maintainability/prazdevs/use-persistent-stopwatch?logo=code-climate&style=flat" />
+  <img src="https://img.shields.io/github/package-json/v/prazdevs/vite-plugin-https-certs?style=flat&color=orange" />
+  <img src="https://img.shields.io/npm/dependency-version/vite-plugin-https-certs/peer/vite" />
+  <img src="https://img.shields.io/codeclimate/maintainability/prazdevs/vite-plugin-https-certs?logo=code-climate&style=flat" />
   <img src="https://codecov.io/gh/prazdevs/vite-plugin-https-certs/branch/main/graph/badge.svg?token=AEAOW30X6H&style=flat"/>
-  <img src="https://img.shields.io/github/license/prazdevs/use-persistent-stopwatch?style=flat" />
+  <img src="https://img.shields.io/github/license/prazdevs/vite-plugin-https-certs?style=flat" />
 </p>
 
 ## ❓ Why would I need this?
@@ -85,7 +86,7 @@ export default defineConfig({
 
 ## 🚧 Caveats
 
-This plugin only overrides the config before its resolution by Vite. Certificate and key validations are still done during the dev server creation.
+This plugin only overrides the config before its resolution by Vite. Certificate and key validations are still done during the dev server creation. The certificate and key fetching is done by checking the file extensions.
 
 If the given certificate and keys are invalid, the dev server will not start.
 
