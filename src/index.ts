@@ -3,14 +3,14 @@ import { join, extname } from 'path'
 
 import type { Plugin, UserConfig } from 'vite'
 
-export interface PluginOptions {
+export interface HttpCertsOptions {
   path?: string
   certExts?: string[]
   keyExts?: string[]
   defaultIfNoCerts?: boolean
 }
 
-function httpsCerts (options?: PluginOptions): Plugin {
+function httpsCerts (options?: HttpCertsOptions): Plugin {
   const {
     path = '.certs',
     certExts = ['.crt', '.cert'],
