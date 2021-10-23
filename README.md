@@ -18,7 +18,7 @@
 ## ❓ Why would I need this?
 
 This plugin comes in handy when you need your dev server to serve over HTTPS without being annoyed by insecure browser warnings but avoid sharing certificates:
-1. Generate a self signed certificate and a matching key for localhost.
+1. Generate a self signed certificate and a matching key for localhost ([example](https://letsencrypt.org/docs/certificates-for-localhost/)).
 2. Trust the certificate (`keychain`, `certmgr`...).
 3. Drop the certificate in configured project folder (`.certs` by default).
 4. Add the plugin to your Vite config.
