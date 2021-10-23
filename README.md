@@ -6,7 +6,7 @@
 </p>
 
 <h1 align="center">vite-plugin-https-certs</h1>
-<p align="center">Vite plugin to parse and load server.https certificates from a folder provided in config.</p>
+<p align="center">Vite plugin to find certficiate/key files and override server.https config before resolution.</p>
 
 <p align="center">
   <img src="https://img.shields.io/github/package-json/v/prazdevs/vite-plugin-https-certs?style=flat&color=orange" />
