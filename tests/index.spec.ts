@@ -14,7 +14,7 @@ describe('HttpsCertsPlugin', () => {
   })
 
   describe('no config provided', () => {
-    it('should default when no .certs folder', () => {
+    it('defaults when no .certs folder', () => {
       //* arrange
       fs.existsSync = jest.fn(() => false)
       fs.readdirSync = jest.fn()
@@ -30,7 +30,7 @@ describe('HttpsCertsPlugin', () => {
       expect(resolvedHttps).toEqual(true)
     })
 
-    it('should default when no files in .certs folder', () => {
+    it('defaults when no files in .certs folder', () => {
       //* arrange
       fs.existsSync = jest.fn(() => true)
       fs.readdirSync = jest.fn(() => [])
@@ -46,7 +46,7 @@ describe('HttpsCertsPlugin', () => {
       expect(resolvedHttps).toEqual(true)
     })
 
-    it('should set cert and key when files in .certs', () => {
+    it('sets cert and key when files in .certs', () => {
       //* arrange
       fs.existsSync = jest.fn(() => true)
       fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.key'])
@@ -67,7 +67,7 @@ describe('HttpsCertsPlugin', () => {
   })
 
   describe('path option provided', () => {
-    it('should default when no {path} folder', () => {
+    it('defaults when no {path} folder', () => {
       //* arrange
       fs.existsSync = jest.fn(() => false)
       fs.readdirSync = jest.fn()
@@ -83,7 +83,7 @@ describe('HttpsCertsPlugin', () => {
       expect(resolvedHttps).toEqual(true)
     })
 
-    it('should default when no files in {path} folder', () => {
+    it('defaults when no files in {path} folder', () => {
       //* arrange
       fs.existsSync = jest.fn(() => true)
       fs.readdirSync = jest.fn(() => [])
@@ -99,7 +99,7 @@ describe('HttpsCertsPlugin', () => {
       expect(resolvedHttps).toEqual(true)
     })
 
-    it('should set cert and key when files in {path}', () => {
+    it('sets cert and key when files in {path}', () => {
       //* arrange
       fs.existsSync = jest.fn(() => true)
       fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.key'])
@@ -120,7 +120,7 @@ describe('HttpsCertsPlugin', () => {
   })
 
   describe('keyExts option provided', () => {
-    it('should default when no files with {keyExts} in .certs', () => {
+    it('defaults when no files with {keyExts} in .certs', () => {
       //* arrange
       fs.existsSync = jest.fn(() => true)
       fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.key'])
@@ -136,7 +136,7 @@ describe('HttpsCertsPlugin', () => {
       expect(resolvedHttps).toEqual(true)
     })
 
-    it('should set cert and key when files with {keyExts} in .certs', () => {
+    it('sets cert and key when files with {keyExts} in .certs', () => {
       //* arrange
       fs.existsSync = jest.fn(() => true)
       fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.mock'])
@@ -157,7 +157,7 @@ describe('HttpsCertsPlugin', () => {
   })
 
   describe('certExts option provided', () => {
-    it('should default when no files with {certExts} in .certs', () => {
+    it('defaults when no files with {certExts} in .certs', () => {
       //* arrange
       fs.existsSync = jest.fn(() => true)
       fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.key'])
@@ -173,7 +173,7 @@ describe('HttpsCertsPlugin', () => {
       expect(resolvedHttps).toEqual(true)
     })
 
-    it('should set cert and key when files with {certExts} in .certs', () => {
+    it('sets cert and key when files with {certExts} in .certs', () => {
       //* arrange
       fs.existsSync = jest.fn(() => true)
       fs.readdirSync = jest.fn().mockReturnValue(['lorem.mock', 'ipsum.key'])
@@ -194,7 +194,7 @@ describe('HttpsCertsPlugin', () => {
   })
 
   describe('defaultIfNoCerts option provided', () => {
-    it('should default to false when set and no certs', () => {
+    it('defaults to false when set and no certs', () => {
       //* arrange
       fs.existsSync = jest.fn(() => false)
       fs.readdirSync = jest.fn()
