@@ -10,7 +10,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/github/package-json/v/prazdevs/vite-plugin-https-certs?style=flat&color=orange" />
-  <img src="https://img.shields.io/npm/dependency-version/vite-plugin-https-certs/peer/vite" />
+  <img src="https://img.shields.io/npm/dependency-version/vite-plugin-https-certs/peer/vite?logo=vite" />
   <img src="https://img.shields.io/codeclimate/maintainability/prazdevs/vite-plugin-https-certs?logo=code-climate&style=flat" />
   <img src="https://codecov.io/gh/prazdevs/vite-plugin-https-certs/branch/main/graph/badge.svg?token=AEAOW30X6H&style=flat"/>
   <img src="https://img.shields.io/github/license/prazdevs/vite-plugin-https-certs?style=flat" />
