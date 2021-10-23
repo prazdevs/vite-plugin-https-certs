@@ -4,13 +4,37 @@ import { join, extname } from 'path'
 import type { Plugin, UserConfig } from 'vite'
 
 export interface HttpCertsOptions {
+  /**
+   * Certificates folder path.
+   * @default .certs
+   */
   path?: string
+
+  /**
+   * Certificate file extensions (overrides default values when provided).
+   * @default ['.crt','.cert']
+   */
   certExts?: string[]
+
+  /**
+   * Key file extensions (overrides default values when provided).
+   * @default ['.key']
+   */
   keyExts?: string[]
+
+  /**
+   * Whether or not https should be enabled when certificates are not resolved.
+   * @default true
+   */
   defaultIfNoCerts?: boolean
 }
 
-function httpsCerts (options?: HttpCertsOptions): Plugin {
+/**
+ * Vite plugin to set up https on dev server with certificates from a folder.
+ * @param options
+ * @returns {Plugin}
+ */
+export default function (options?: HttpCertsOptions): Plugin {
   const {
     path = '.certs',
     certExts = ['.crt', '.cert'],
@@ -40,5 +64,3 @@ function httpsCerts (options?: HttpCertsOptions): Plugin {
   }
   return plugin as Plugin
 }
-
-export default httpsCerts
