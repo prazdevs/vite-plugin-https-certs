@@ -27,6 +27,12 @@ export interface HttpCertsOptions {
    * @default true
    */
   defaultIfNoCerts?: boolean
+
+  /**
+   * Whether or not https should be enabled for Vite preview
+   * @default false
+   */
+  preview?: boolean
 }
 
 /**
@@ -40,6 +46,7 @@ export default function (options?: HttpCertsOptions): Plugin {
     certExts = ['.crt', '.cert'],
     keyExts = ['.key'],
     defaultIfNoCerts = true,
+    preview = false,
   } = options ?? {}
 
   const plugin = {
@@ -52,14 +59,18 @@ export default function (options?: HttpCertsOptions): Plugin {
       const keyFile = files.find(f => keyExts.includes(extname(f)))
       const certFile = files.find(f => certExts.includes(extname(f)))
 
-      if (keyFile && certFile) {
-        const key = join(path, keyFile)
-        const cert = join(path, certFile)
+      const server = (keyFile && certFile)
+        ? {
+          https: {
+            key: join(path, keyFile),
+            cert: join(path, certFile),
+          },
+        }
+        : { https: defaultIfNoCerts }
 
-        return { server: { https: { key, cert } } }
-      }
-
-      return { server: { https: defaultIfNoCerts } }
+      return preview
+        ? { server, preview: server }
+        : { server }
     },
   }
   return plugin as Plugin
