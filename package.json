@@ -17,27 +17,25 @@
   "scripts": {
     "build": "tsup src/index.ts --dts --format cjs,esm",
     "prepublishOnly": "npm run build",
-    "release": "git-ensure -a && bumpp -c ':bookmark: release v%s' -t -p",
+    "release": "git-ensure -a && bumpp -c \\':bookmark: release v%s`\\' -t -p",
     "lint": "eslint --fix --ext .ts",
-    "test": "jest",
-    "coverage": "jest --coverage"
+    "test": "vitest",
+    "coverage": "vitest --coverage"
   },
   "peerDependencies": {
     "vite": "^2.0.0"
   },
   "devDependencies": {
-    "@prazdevs/eslint-config-typescript": "^2.2.0",
-    "@types/jest": "^27.0.2",
-    "@types/node": "^16.11.3",
+    "@prazdevs/eslint-config-typescript": "^3.1.0",
+    "@types/node": "^17.0.23",
     "bumpp": "^7.1.1",
-    "eslint": "^7.32.0",
+    "c8": "^7.11.0",
+    "eslint": "^8.12.0",
     "git-ensure": "^0.1.0",
-    "jest": "^27.3.1",
-    "ts-jest": "^27.0.7",
-    "ts-node": "^10.4.0",
-    "tsup": "^5.4.2",
-    "typescript": "^4.4.4",
-    "vite": "^2.6.10"
+    "tsup": "^5.12.1",
+    "typescript": "^4.6.3",
+    "vite": "^2.8.6",
+    "vitest": "^0.7.12"
   },
   "volta": {
     "node": "16.12.0"

@@ -1,23 +1,24 @@
-import fs from 'fs'
+import { Dirent, existsSync, readdirSync } from 'fs'
 import { join } from 'path'
 import { UserConfig } from 'vite'
+import { vi, describe, it, beforeEach, expect } from 'vitest'
 
 import HttpsCerts from '../src/index'
 
-jest.mock('fs')
+vi.mock('fs')
 
 describe('HttpsCertsPlugin', () => {
   const root = process.cwd()
 
   beforeEach(() => {
-    jest.restoreAllMocks()
+    vi.clearAllMocks()
   })
 
   describe('no config provided', () => {
     it('defaults when no .certs folder', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => false)
-      fs.readdirSync = jest.fn()
+      vi.mocked(existsSync).mockImplementation(() => false)
+      vi.mocked(readdirSync).mockImplementation(() => [])
 
       //* act
       const httpsCertPlugin = HttpsCerts()
@@ -25,15 +26,15 @@ describe('HttpsCertsPlugin', () => {
       const resolvedHttps = resolvedConfig.server?.https
 
       //* assert
-      expect(fs.existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
-      expect(fs.readdirSync).not.toHaveBeenCalled()
+      expect(existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(readdirSync).not.toHaveBeenCalled()
       expect(resolvedHttps).toEqual(true)
     })
 
     it('defaults when no files in .certs folder', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => true)
-      fs.readdirSync = jest.fn(() => [])
+      vi.mocked(existsSync).mockImplementation(() => true)
+      vi.mocked(readdirSync).mockImplementation(() => [])
 
       //* act
       const httpsCertPlugin = HttpsCerts()
@@ -41,15 +42,18 @@ describe('HttpsCertsPlugin', () => {
       const resolvedHttps = resolvedConfig.server?.https
 
       //* assert
-      expect(fs.existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
-      expect(fs.readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
       expect(resolvedHttps).toEqual(true)
     })
 
     it('sets cert and key when files in .certs', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => true)
-      fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.key'])
+      vi.mocked(existsSync).mockImplementation(() => true)
+      vi.mocked(readdirSync).mockImplementation(() => [
+        'lorem.cert' as unknown as Dirent,
+        'ipsum.key' as unknown as Dirent,
+      ])
 
       //* act
       const httpsCertPlugin = HttpsCerts()
@@ -57,8 +61,8 @@ describe('HttpsCertsPlugin', () => {
       const resolvedHttps = resolved.server?.https
 
       //* assert
-      expect(fs.existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
-      expect(fs.readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
       expect(resolvedHttps).toEqual({
         cert: join('.certs', 'lorem.cert'),
         key: join('.certs', 'ipsum.key'),
@@ -69,8 +73,8 @@ describe('HttpsCertsPlugin', () => {
   describe('path option provided', () => {
     it('defaults when no {path} folder', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => false)
-      fs.readdirSync = jest.fn()
+      vi.mocked(existsSync).mockImplementation(() => false)
+      vi.mocked(readdirSync).mockImplementation(() => [])
 
       //* act
       const httpsCertPlugin = HttpsCerts({ path: 'mock' })
@@ -78,15 +82,15 @@ describe('HttpsCertsPlugin', () => {
       const resolvedHttps = resolved.server?.https
 
       //* assert
-      expect(fs.existsSync).toHaveBeenNthCalledWith(1, join(root, 'mock'))
-      expect(fs.readdirSync).not.toHaveBeenCalled()
+      expect(existsSync).toHaveBeenNthCalledWith(1, join(root, 'mock'))
+      expect(readdirSync).not.toHaveBeenCalled()
       expect(resolvedHttps).toEqual(true)
     })
 
     it('defaults when no files in {path} folder', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => true)
-      fs.readdirSync = jest.fn(() => [])
+      vi.mocked(existsSync).mockImplementation(() => true)
+      vi.mocked(readdirSync).mockImplementation(() => [])
 
       //* act
       const httpsCertPlugin = HttpsCerts({ path: 'mock' })
@@ -94,15 +98,18 @@ describe('HttpsCertsPlugin', () => {
       const resolvedHttps = resolvedConfig.server?.https
 
       //* assert
-      expect(fs.existsSync).toHaveBeenNthCalledWith(1, join(root, 'mock'))
-      expect(fs.readdirSync).toHaveBeenNthCalledWith(1, join(root, 'mock'))
+      expect(existsSync).toHaveBeenNthCalledWith(1, join(root, 'mock'))
+      expect(readdirSync).toHaveBeenNthCalledWith(1, join(root, 'mock'))
       expect(resolvedHttps).toEqual(true)
     })
 
     it('sets cert and key when files in {path}', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => true)
-      fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.key'])
+      vi.mocked(existsSync).mockImplementation(() => true)
+      vi.mocked(readdirSync).mockImplementation(() => [
+        'lorem.cert' as unknown as Dirent,
+        'ipsum.key' as unknown as Dirent,
+      ])
 
       //* act
       const httpsCertPlugin = HttpsCerts({ path: 'mock' })
@@ -110,8 +117,8 @@ describe('HttpsCertsPlugin', () => {
       const resolvedHttps = resolved.server?.https
 
       //* assert
-      expect(fs.existsSync).toHaveBeenNthCalledWith(1, join(root, 'mock'))
-      expect(fs.readdirSync).toHaveBeenNthCalledWith(1, join(root, 'mock'))
+      expect(existsSync).toHaveBeenNthCalledWith(1, join(root, 'mock'))
+      expect(readdirSync).toHaveBeenNthCalledWith(1, join(root, 'mock'))
       expect(resolvedHttps).toEqual({
         cert: join('mock', 'lorem.cert'),
         key: join('mock', 'ipsum.key'),
@@ -122,8 +129,11 @@ describe('HttpsCertsPlugin', () => {
   describe('keyExts option provided', () => {
     it('defaults when no files with {keyExts} in .certs', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => true)
-      fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.key'])
+      vi.mocked(existsSync).mockImplementation(() => true)
+      vi.mocked(readdirSync).mockImplementation(() => [
+        'lorem.cert' as unknown as Dirent,
+        'ipsum.key' as unknown as Dirent,
+      ])
 
       //* act
       const httpsCertPlugin = HttpsCerts({ keyExts: ['.mock'] })
@@ -131,15 +141,18 @@ describe('HttpsCertsPlugin', () => {
       const resolvedHttps = resolved.server?.https
 
       //* assert
-      expect(fs.existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
-      expect(fs.readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
       expect(resolvedHttps).toEqual(true)
     })
 
     it('sets cert and key when files with {keyExts} in .certs', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => true)
-      fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.mock'])
+      vi.mocked(existsSync).mockImplementation(() => true)
+      vi.mocked(readdirSync).mockImplementation(() => [
+        'lorem.cert' as unknown as Dirent,
+        'ipsum.mock' as unknown as Dirent,
+      ])
 
       //* act
       const httpsCertPlugin = HttpsCerts({ keyExts: ['.mock'] })
@@ -147,8 +160,8 @@ describe('HttpsCertsPlugin', () => {
       const resolvedHttps = resolved.server?.https
 
       //* assert
-      expect(fs.existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
-      expect(fs.readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
       expect(resolvedHttps).toEqual({
         cert: join('.certs', 'lorem.cert'),
         key: join('.certs', 'ipsum.mock'),
@@ -159,8 +172,11 @@ describe('HttpsCertsPlugin', () => {
   describe('certExts option provided', () => {
     it('defaults when no files with {certExts} in .certs', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => true)
-      fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.key'])
+      vi.mocked(existsSync).mockImplementation(() => true)
+      vi.mocked(readdirSync).mockImplementation(() => [
+        'lorem.cert' as unknown as Dirent,
+        'ipsum.key' as unknown as Dirent,
+      ])
 
       //* act
       const httpsCertPlugin = HttpsCerts({ certExts: ['.mock'] })
@@ -168,15 +184,18 @@ describe('HttpsCertsPlugin', () => {
       const resolvedHttps = resolved.server?.https
 
       //* assert
-      expect(fs.existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
-      expect(fs.readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
       expect(resolvedHttps).toEqual(true)
     })
 
     it('sets cert and key when files with {certExts} in .certs', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => true)
-      fs.readdirSync = jest.fn().mockReturnValue(['lorem.mock', 'ipsum.key'])
+      vi.mocked(existsSync).mockImplementation(() => true)
+      vi.mocked(readdirSync).mockImplementation(() => [
+        'lorem.mock' as unknown as Dirent,
+        'ipsum.key' as unknown as Dirent,
+      ])
 
       //* act
       const httpsCertPlugin = HttpsCerts({ certExts: ['.mock'] })
@@ -184,8 +203,8 @@ describe('HttpsCertsPlugin', () => {
       const resolvedHttps = resolved.server?.https
 
       //* assert
-      expect(fs.existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
-      expect(fs.readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(readdirSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
       expect(resolvedHttps).toEqual({
         cert: join('.certs', 'lorem.mock'),
         key: join('.certs', 'ipsum.key'),
@@ -196,8 +215,8 @@ describe('HttpsCertsPlugin', () => {
   describe('defaultIfNoCerts option provided', () => {
     it('defaults to false when set and no certs', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => false)
-      fs.readdirSync = jest.fn()
+      vi.mocked(existsSync).mockImplementation(() => false)
+      vi.mocked(readdirSync).mockImplementation(() => [])
 
       //* act
       const httpsCertPlugin = HttpsCerts({ defaultIfNoCerts: false })
@@ -205,8 +224,8 @@ describe('HttpsCertsPlugin', () => {
       const resolvedHttps = resolved.server?.https
 
       //* assert
-      expect(fs.existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
-      expect(fs.readdirSync).not.toHaveBeenCalled()
+      expect(existsSync).toHaveBeenNthCalledWith(1, join(root, '.certs'))
+      expect(readdirSync).not.toHaveBeenCalled()
       expect(resolvedHttps).toEqual(false)
     })
   })
