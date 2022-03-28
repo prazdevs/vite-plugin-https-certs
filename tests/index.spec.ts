@@ -233,8 +233,11 @@ describe('HttpsCertsPlugin', () => {
   describe('preview config provided', () => {
     it('sets cert and key for server and preview', () => {
       //* arrange
-      fs.existsSync = jest.fn(() => true)
-      fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.key'])
+      vi.mocked(existsSync).mockImplementation(() => true)
+      vi.mocked(readdirSync).mockImplementation(() => [
+        'lorem.cert' as unknown as Dirent,
+        'ipsum.key' as unknown as Dirent,
+      ])
 
       //* act
       const httpsCertPlugin = HttpsCerts({ preview: true })
