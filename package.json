@@ -20,7 +20,7 @@
   "scripts": {
     "build": "tsup src/index.ts --dts --format cjs,esm",
     "prepublishOnly": "npm run build",
-    "release": "git-ensure -a && bumpp -c \\':bookmark: release v%s`\\' -t -p",
+    "release": "git-ensure -a && bumpp -c \":bookmark: release v%s`\" -t -p",
     "lint": "eslint --fix --ext .ts",
     "test": "vitest",
     "coverage": "vitest --coverage"
