@@ -229,4 +229,24 @@ describe('HttpsCertsPlugin', () => {
       expect(resolvedHttps).toEqual(false)
     })
   })
+
+  describe('preview config provided', () => {
+    it('sets cert and key for server and preview', () => {
+      //* arrange
+      fs.existsSync = jest.fn(() => true)
+      fs.readdirSync = jest.fn().mockReturnValue(['lorem.cert', 'ipsum.key'])
+
+      //* act
+      const httpsCertPlugin = HttpsCerts({ preview: true })
+      const resolved = (httpsCertPlugin.config as () => UserConfig)()
+
+      //* assert
+      const expectedHttps = {
+        cert: join('.certs', 'lorem.cert'),
+        key: join('.certs', 'ipsum.key'),
+      }
+      expect(resolved.server?.https).toEqual(expectedHttps)
+      expect(resolved.preview?.https).toEqual(expectedHttps)
+    })
+  })
 })
