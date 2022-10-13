@@ -1,4 +1,10 @@
 <p align="center">
+  <strong><em>This repo/package is not maintained anymore. <a href="https://github.com/liuweiGL/vite-plugin-mkcert"><code>vite-plugin-mkcert</code><a/> does a much better job :)</em></strong>
+</p>
+
+<hr>
+
+<p align="center">
   <img alt="" width="150" src="https://i.imgur.com/nEyndPI.png">
 </p>
 <p align="center">
